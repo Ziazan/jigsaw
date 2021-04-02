@@ -9,6 +9,8 @@
     "classname": "^0.0.0",
     "classnames": "^2.3.0",
     "cra-template-typescript": "1.1.2",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb": "^18.2.1",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "node-sass": "^5.0.0",
@@ -16,6 +18,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "shared-config": "^0.3.2",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"
   },
@@ -28,12 +31,14 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
+    "format": "prettier --write src//*.{js,jsx,ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "shared-config",
+      "eslint-config-airbnb",
       "react-app/jest"
     ],
     "rules": {

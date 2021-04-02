@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import classNames from 'classnames'
+import React, { FC } from 'react';
+import classNames from 'classnames';
 
 export enum ButtonSize {
     Large = 'lg',
@@ -23,36 +23,41 @@ interface BaseButtonProps {
 }
 
 const Button: FC<BaseButtonProps> = (props) => {
-    const {
-        btnType,
-        disabled,
-        size,
-        children,
-        href
-    } = props;
-    const classes = classNames('btn', {
-        [`btn-${btnType}`]: btnType,
-        [`btn-${size}`]: size,
-        'disable': (btnType === ButtonType.Link) && disabled,
+  const {
+    btnType,
+    disabled,
+    size,
+    children,
+    href,
+  } = props;
+  const classes = classNames('btn', {
+    [`btn-${btnType}`]: btnType,
+    [`btn-${size}`]: size,
+    disable: (btnType === ButtonType.Link) && disabled,
 
-    })
-    if (btnType === ButtonType.Link && href) {
-        return (<a
-            className={classes}
-            href={href}
-        >{children}</a>)
-    } else {
-        return (
-            <button
-                className={classes}
-                disabled={disabled}
-            >{children}</button>
-        )
-    }
-}
+  });
+  if (btnType === ButtonType.Link && href) {
+    return (
+      <a
+        className={classes}
+        href={href}
+      >
+        {children}
+      </a>
+    );
+  }
+  return (
+    <button
+      className={classes}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
+};
 Button.defaultProps = {
-    disabled:false,
-    btnType:ButtonType.Default,
-}
+  disabled: false,
+  btnType: ButtonType.Default,
+};
 
 export default Button;
