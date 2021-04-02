@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/react": "^11.2.6",
     "@types/classnames": "^2.2.11",
+    "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "classname": "^0.0.0",
