@@ -5,5 +5,5 @@ import Button from './index'
 test('first react test case', () => {
 	const wrapper = render(<Button>Nice</Button>)
 	const element = wrapper.queryByText('Nice')
-	expect(element).toBeTruthy()
+	expect(element).toBeInTheDocument()
 })
