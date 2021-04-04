@@ -1,5 +1,6 @@
-import React, { FC, useState, createContext } from 'react'
+import React, { FC, useState, createContext, Children, FunctionComponentElement } from 'react'
 import classNames from 'classnames'
+import { MenuItemProps } from './menuItem'
 
 type SelectCallBack = (selectedIndex: string) => void
 
@@ -19,6 +20,7 @@ interface IMenuContext {
 }
 
 export const MenuContext = createContext<IMenuContext>({ index: '0' })
+
 const Menu: FC<MenuProps> = (props) => {
 	const { defaultIndex, className, style, mode, onSelect, children } = props
 	const [currentActive, setActive] = useState(defaultIndex)
@@ -36,9 +38,22 @@ const Menu: FC<MenuProps> = (props) => {
 		index: currentActive ? currentActive : '0',
 		onSelect: handleClick,
 	}
+
+	const renderChildren = () => {
+		return Children.map(children, (child, index) => {
+			const childElement = child as FunctionComponentElement<MenuItemProps>
+			const { displayName } = childElement.type
+			if (displayName === 'MenuItem') {
+				return child
+			} else {
+				console.error('Warning：Menu 下只能用 MenuItem 标签')
+			}
+		})
+	}
+	//children 是一个不透明的数据 不能直接map
 	return (
 		<ul className={classes} style={style} data-testid="test-menu">
-			<MenuContext.Provider value={passedContext}>{children}</MenuContext.Provider>
+			<MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
 		</ul>
 	)
 }
