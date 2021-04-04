@@ -44,7 +44,9 @@ const Menu: FC<MenuProps> = (props) => {
 			const childElement = child as FunctionComponentElement<MenuItemProps>
 			const { displayName } = childElement.type
 			if (displayName === 'MenuItem') {
-				return child
+				return React.cloneElement(childElement, {
+					index: '' + index,
+				})
 			} else {
 				console.error('Warning：Menu 下只能用 MenuItem 标签')
 			}
