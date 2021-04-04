@@ -19,7 +19,7 @@ function App() {
 					<MenuItem>link 4</MenuItem>
 				</Menu>
 				<p>垂直</p>
-				<Menu defaultIndex="0" mode="horizontal">
+				<Menu defaultIndex="0" mode="vertical">
 					<MenuItem>link 1</MenuItem>
 					<MenuItem>link 2</MenuItem>
 					<MenuItem>link 3</MenuItem>
