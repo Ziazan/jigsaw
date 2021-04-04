@@ -1,4 +1,4 @@
-import React, { FC, useState, createContext, Children, FunctionComponentElement } from 'react'
+import React, { FC, useState, createContext } from 'react'
 import classNames from 'classnames'
 import { MenuItemProps } from './menuItem'
 
@@ -39,9 +39,10 @@ const Menu: FC<MenuProps> = (props) => {
 		onSelect: handleClick,
 	}
 
+	//children 是一个不透明的数据 直接map不安全，使用React.Children
 	const renderChildren = () => {
-		return Children.map(children, (child, index) => {
-			const childElement = child as FunctionComponentElement<MenuItemProps>
+		return React.Children.map(children, (child, index) => {
+			const childElement = child as React.FunctionComponentElement<MenuItemProps>
 			const { displayName } = childElement.type
 			if (displayName === 'MenuItem') {
 				return React.cloneElement(childElement, {
@@ -52,7 +53,7 @@ const Menu: FC<MenuProps> = (props) => {
 			}
 		})
 	}
-	//children 是一个不透明的数据 不能直接map
+
 	return (
 		<ul className={classes} style={style} data-testid="test-menu">
 			<MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
