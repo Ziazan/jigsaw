@@ -22,7 +22,7 @@ export const MenuContext = createContext<IMenuContext>({ index: '0' })
 const Menu: FC<MenuProps> = (props) => {
 	const { defaultIndex, className, style, mode, onSelect, children } = props
 	const [currentActive, setActive] = useState(defaultIndex)
-	const _class = classNames('jigsaw-menu', {
+	const classes = classNames('jigsaw-menu', className, {
 		'menu-vertical': mode === 'vertical',
 	})
 	const handleClick = (index: string) => {
@@ -37,7 +37,7 @@ const Menu: FC<MenuProps> = (props) => {
 		onSelect: handleClick,
 	}
 	return (
-		<ul className={_class} style={style}>
+		<ul className={classes} style={style} data-testid="test-menu">
 			<MenuContext.Provider value={passedContext}>{children}</MenuContext.Provider>
 		</ul>
 	)

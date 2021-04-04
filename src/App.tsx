@@ -19,7 +19,9 @@ function App() {
 					}}
 				>
 					{[1, 2, 3, 4].map((item, index) => (
-						<MenuItem index={`${index}`}>link-{item}</MenuItem>
+						<MenuItem key={index} index={`${index}`}>
+							link-{item}
+						</MenuItem>
 					))}
 					<MenuItem index={`5`} disabled>
 						link-5
@@ -28,7 +30,9 @@ function App() {
 				<p>垂直</p>
 				<Menu defaultIndex="0" mode="vertical">
 					{[1, 2, 3, 4].map((item, index) => (
-						<MenuItem index={`${index}`}>link-{item}</MenuItem>
+						<MenuItem key={index} index={`${index}`}>
+							link-{item}
+						</MenuItem>
 					))}
 				</Menu>
 				<p>类型</p>
