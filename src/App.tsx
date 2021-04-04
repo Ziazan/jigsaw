@@ -12,18 +12,24 @@ function App() {
 			<header className="App-header">
 				<h1>menu</h1>
 				<p>水平</p>
-				<Menu defaultIndex="0">
-					<MenuItem>link 1</MenuItem>
-					<MenuItem>link 2</MenuItem>
-					<MenuItem>link 3</MenuItem>
-					<MenuItem>link 4</MenuItem>
+				<Menu
+					defaultIndex="2"
+					onSelect={(index) => {
+						alert(index)
+					}}
+				>
+					{[1, 2, 3, 4].map((item, index) => (
+						<MenuItem index={`${index}`}>link-{item}</MenuItem>
+					))}
+					<MenuItem index={`5`} disabled>
+						link-5
+					</MenuItem>
 				</Menu>
 				<p>垂直</p>
 				<Menu defaultIndex="0" mode="vertical">
-					<MenuItem>link 1</MenuItem>
-					<MenuItem>link 2</MenuItem>
-					<MenuItem>link 3</MenuItem>
-					<MenuItem>link 4</MenuItem>
+					{[1, 2, 3, 4].map((item, index) => (
+						<MenuItem index={`${index}`}>link-{item}</MenuItem>
+					))}
 				</Menu>
 				<p>类型</p>
 				<Button
