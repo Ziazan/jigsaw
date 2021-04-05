@@ -26,11 +26,11 @@ function App() {
 				</Menu>
 				<p>垂直</p>
 				<Menu defaultIndex="0" mode="vertical">
-					{[1, 2, 3, 4].map((item, index) => (
-						<MenuItem key={index} index={`${index}`}>
-							link-{item}
-						</MenuItem>
-					))}
+					<SubMenuItem title="submenu">
+						<MenuItem>link</MenuItem>
+						<MenuItem>link</MenuItem>
+						<MenuItem>link</MenuItem>
+					</SubMenuItem>
 				</Menu>
 			</header>
 		</div>

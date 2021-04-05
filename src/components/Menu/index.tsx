@@ -17,6 +17,7 @@ export interface MenuProps {
 interface IMenuContext {
 	index: string
 	onSelect?: SelectCallBack
+	mode?: MenuMode
 }
 
 export const MenuContext = createContext<IMenuContext>({ index: '0' })
@@ -38,6 +39,7 @@ const Menu: FC<MenuProps> = (props) => {
 	const passedContext: IMenuContext = {
 		index: currentActive ? currentActive : '0',
 		onSelect: handleClick,
+		mode,
 	}
 
 	//props 中的 children 是一个不透明的数据 直接map不可靠，使用React.Children
