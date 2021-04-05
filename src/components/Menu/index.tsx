@@ -26,6 +26,7 @@ const Menu: FC<MenuProps> = (props) => {
 	const [currentActive, setActive] = useState(defaultIndex)
 	const classes = classNames('jigsaw-menu', className, {
 		'menu-vertical': mode === 'vertical',
+		'menu-horizontal': mode !== 'vertical',
 	})
 	const handleClick = (index: string) => {
 		setActive(index)
@@ -39,17 +40,17 @@ const Menu: FC<MenuProps> = (props) => {
 		onSelect: handleClick,
 	}
 
-	//children 是一个不透明的数据 直接map不安全，使用React.Children
+	//props 中的 children 是一个不透明的数据 直接map不可靠，使用React.Children
 	const renderChildren = () => {
 		return React.Children.map(children, (child, index) => {
 			const childElement = child as React.FunctionComponentElement<MenuItemProps>
 			const { displayName } = childElement.type
-			if (displayName === 'MenuItem') {
+			if (displayName === 'MenuItem' || displayName === 'SubMenuItem') {
 				return React.cloneElement(childElement, {
 					index: '' + index,
 				})
 			} else {
-				console.error('Warning：Menu 下只能用 MenuItem 标签')
+				console.error('Warning：Menu has a child which is not MenuItm or SubMenuItem')
 			}
 		})
 	}

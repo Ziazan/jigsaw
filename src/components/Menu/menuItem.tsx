@@ -23,7 +23,7 @@ const MenuItem: FC<MenuItemProps> = (props) => {
 		}
 	}
 	return (
-		<li className={classes} style={style} onClick={handleClick}>
+		<li className={classes} style={style} onClick={handleClick} key={index}>
 			{children}
 		</li>
 	)

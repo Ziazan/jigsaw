@@ -27,6 +27,43 @@
 	}
 }
 
+.submenu-item {
+	position: relative;
+	.submenu-title {
+		display: flex;
+		align-items: center;
+	}
+}
+.jigsaw-submenu {
+	list-style: none;
+	padding-left: 0;
+	white-space: nowrap;
+	.menu-item {
+		padding: $menu-item-padding-y $menu-item-padding-x;
+		cursor: pointer;
+		transition: $menu-transition;
+		color: $body-color;
+		&.is-active,
+		&:hover {
+			color: $menu-item-active-color !important;
+		}
+	}
+}
+.menu-horizontal {
+	> .menu-item {
+		border-bottom: $menu-item-active-border-width solid transparent;
+	}
+	.jigsaw-submenu {
+		position: absolute;
+		background: $white;
+		z-index: 100;
+		top: calc(100% + 8px);
+		left: 0;
+		border: $menu-border-width solid $menu-border-color;
+		box-shadow: $submenu-box-shadow;
+	}
+}
+
 .menu-vertical {
 	flex-direction: column;
 	border-bottom: 0;
