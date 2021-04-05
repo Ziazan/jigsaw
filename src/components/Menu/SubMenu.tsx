@@ -11,7 +11,7 @@ export interface SubMenuProps {
 	className?: string
 }
 
-const SubMenuItem: React.FC<SubMenuProps> = (props) => {
+const SubMenu: React.FC<SubMenuProps> = (props) => {
 	const { title, index, children, style, className } = props
 	const context = useContext(MenuContext)
 	const openedSunMenus = context.defaultOpenSubMenus as Array<string>
@@ -84,6 +84,6 @@ const SubMenuItem: React.FC<SubMenuProps> = (props) => {
 	)
 }
 
-SubMenuItem.displayName = 'SubMenuItem'
+SubMenu.displayName = 'SubMenu'
 
-export default SubMenuItem
+export default SubMenu

@@ -3,7 +3,7 @@ import logo from './logo.svg'
 import Button, { ButtonType, ButtonSize } from './components/Button'
 import Menu from './components/Menu'
 import MenuItem from './components/Menu/menuItem'
-import SubMenuItem from './components/Menu/SubMenuItem'
+import SubMenu from './components/Menu/SubMenu'
 
 import './App.css'
 
@@ -15,27 +15,27 @@ function App() {
 				<p>水平</p>
 				<Menu defaultIndex="2">
 					<MenuItem>link</MenuItem>
-					<SubMenuItem title="submenu">
+					<SubMenu title="submenu">
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
-					</SubMenuItem>
+					</SubMenu>
 					<MenuItem index={`5`} disabled>
 						link-5
 					</MenuItem>
 				</Menu>
 				<p>垂直</p>
 				<Menu defaultIndex="0" mode="vertical" defaultOpenSubMenus={['1']}>
-					<SubMenuItem title="submenu">
+					<SubMenu title="submenu">
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
-					</SubMenuItem>
-					<SubMenuItem title="submenu">
+					</SubMenu>
+					<SubMenu title="submenu">
 						<MenuItem>link2</MenuItem>
 						<MenuItem>link2</MenuItem>
 						<MenuItem>link2</MenuItem>
-					</SubMenuItem>
+					</SubMenu>
 				</Menu>
 			</header>
 		</div>
