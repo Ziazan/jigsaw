@@ -13,17 +13,19 @@ export interface MenuProps {
 	mode?: MenuMode
 	style?: React.CSSProperties
 	onSelect?: SelectCallBack
+	defaultOpenSubMenus?: string[]
 }
 interface IMenuContext {
 	index: string
 	onSelect?: SelectCallBack
 	mode?: MenuMode
+	defaultOpenSubMenus?: string[]
 }
 
 export const MenuContext = createContext<IMenuContext>({ index: '0' })
 
 const Menu: FC<MenuProps> = (props) => {
-	const { defaultIndex, className, style, mode, onSelect, children } = props
+	const { defaultIndex, className, style, mode, onSelect, children, defaultOpenSubMenus } = props
 	const [currentActive, setActive] = useState(defaultIndex)
 	const classes = classNames('jigsaw-menu', className, {
 		'menu-vertical': mode === 'vertical',
@@ -40,6 +42,7 @@ const Menu: FC<MenuProps> = (props) => {
 		index: currentActive ? currentActive : '0',
 		onSelect: handleClick,
 		mode,
+		defaultOpenSubMenus,
 	}
 
 	//props 中的 children 是一个不透明的数据 直接map不可靠，使用React.Children
@@ -67,5 +70,6 @@ const Menu: FC<MenuProps> = (props) => {
 Menu.defaultProps = {
 	defaultIndex: '0',
 	mode: 'horizontal',
+	defaultOpenSubMenus: [],
 }
 export default Menu

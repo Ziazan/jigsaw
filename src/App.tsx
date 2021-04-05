@@ -25,11 +25,16 @@ function App() {
 					</MenuItem>
 				</Menu>
 				<p>垂直</p>
-				<Menu defaultIndex="0" mode="vertical">
+				<Menu defaultIndex="0" mode="vertical" defaultOpenSubMenus={['1']}>
 					<SubMenuItem title="submenu">
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
 						<MenuItem>link</MenuItem>
+					</SubMenuItem>
+					<SubMenuItem title="submenu">
+						<MenuItem>link2</MenuItem>
+						<MenuItem>link2</MenuItem>
+						<MenuItem>link2</MenuItem>
 					</SubMenuItem>
 				</Menu>
 			</header>
