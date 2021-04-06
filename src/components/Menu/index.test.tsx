@@ -63,6 +63,8 @@ describe('测试menu组件', () => {
 	it('是否正确渲染组件', () => {
 		expect(menuElement).toBeInTheDocument()
 		expect(menuElement).toHaveClass('jigsaw-menu test')
+		//:scope 属于 CSS 伪类，它表示作为选择器要匹配的参考点的元素。
+		//当需要获取已检索到的的直接后代元素时，:scope 伪类很有用。
 		expect(menuElement.querySelectorAll(':scope > li').length).toEqual(4)
 		expect(activeElement).toHaveClass('menu-item is-active')
 		expect(disabledElement).toHaveClass('menu-item is-disabled')
@@ -114,7 +116,6 @@ describe('测试menu组件', () => {
 			fireEvent.click(drapDownElemnt)
 			expect(drop1Elemnet).not.toBeVisible()
 		})
-		const drapDownElemnt2 = wrapper.getByText('dropdown2')
 	})
 	it('纵向-子菜单默认展开', async () => {
 		cleanup() //清干净
