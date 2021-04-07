@@ -11,6 +11,7 @@
     "@types/jest": "^26.0.22",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "@types/react-transition-group": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "classname": "^0.0.0",
@@ -25,6 +26,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "react-transition-group": "^4.4.1",
     "shared-config": "^0.3.2",
     "typescript": "^4.2.3",
     "web-vitals": "^1.1.1"

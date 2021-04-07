@@ -2,6 +2,7 @@ import React, { FC, useContext, useState } from 'react';
 import classNames from 'classnames';
 import { MenuContext } from './index';
 import { MenuItemProps } from './menuItem';
+import { CSSTransition } from 'react-transition-group';
 import Icon from './../Icon';
 
 export interface SubMenuProps {
@@ -74,7 +75,11 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
         console.error('Warning：Menu has a child which is not MenuItm');
       }
     });
-    return <ul className={subMenuClasses}>{childrenComponent}</ul>;
+    return (
+      <CSSTransition in={menuOpen} timeout={200} unmountOnExit={true} classNames="my-node">
+        <ul className={subMenuClasses}>{childrenComponent}</ul>
+      </CSSTransition>
+    );
   };
   return (
     <li className={classes} style={style} key={index} {...hoverEvents}>
