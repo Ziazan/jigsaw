@@ -56,7 +56,20 @@ function App() {
           Toggle
         </Button>
         <Transition in={show} timeout={300} animation="zoom-in-top">
-          <div>hahaha show</div>
+          <div>
+            <h1>hahaha show</h1>
+          </div>
+        </Transition>
+        <Transition in={show} timeout={300} animation="zoom-in-top" wrapper>
+          <Button
+            size="lg"
+            btnType="primary"
+            onClick={() => {
+              setShow(!show);
+            }}
+          >
+            A Large Button
+          </Button>
         </Transition>
       </header>
     </div>

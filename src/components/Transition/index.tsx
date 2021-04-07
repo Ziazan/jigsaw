@@ -6,13 +6,14 @@ type AnimationName = 'zoom-in-top' | 'zoom-in-left' | 'zoom-in-bottom' | 'zoom-i
 
 type TransitionProps = CSSTransitionProps & {
   animation?: AnimationName;
+  wrapper?: boolean; //避免transition冲突 包一层div
 };
 const Transition: React.FC<TransitionProps> = (props) => {
-  const { animation, classNames, children, ...restProps } = props;
+  const { animation, classNames, children, wrapper, ...restProps } = props;
   return (
     <div>
       <CSSTransition {...restProps} classNames={classNames ? classNames : animation}>
-        {children}
+        {wrapper ? <div>{children}</div> : children}
       </CSSTransition>
     </div>
   );
@@ -21,6 +22,7 @@ const Transition: React.FC<TransitionProps> = (props) => {
 Transition.defaultProps = {
   unmountOnExit: true,
   appear: true,
+  wrapper: false,
 };
 
 export default Transition;
