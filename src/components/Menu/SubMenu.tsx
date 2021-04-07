@@ -21,6 +21,8 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 
   const classes = classNames('menu-item submenu-item', className, {
     'is-active': context.index === index,
+    'is-opened': menuOpen,
+    'is-vertical': context.mode === 'vertical',
   });
 
   const handleClick = (e: React.MouseEvent) => {
@@ -78,7 +80,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
     <li className={classes} style={style} key={index} {...hoverEvents}>
       <div className="submenu-title" {...clickEvents}>
         {title}
-        <Icon icon="arrow-down" />
+        <Icon icon="angle-down" className="arrow-icon" />
       </div>
       {renderChildren()}
     </li>
