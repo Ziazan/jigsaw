@@ -1,6 +1,6 @@
 import React, { FC, useContext, useState } from 'react';
 import classNames from 'classnames';
-import { MenuContext } from './index';
+import { MenuContext } from './menu';
 import { MenuItemProps } from './menuItem';
 import Transition from './../Transition';
 import Icon from './../Icon';
