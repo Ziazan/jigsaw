@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import { layer } from '@fortawesome/fontawesome-svg-core';
 
 //字符串字面量
 export type ButtonSize = 'lg' | 'sm';
