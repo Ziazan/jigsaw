@@ -2,6 +2,10 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import Button, { ButtonProps } from './index';
 
+const styles: React.CSSProperties = {
+  textAlign: 'center',
+  margin: '3em',
+};
 export default {
   title: 'Components/Button',
   component: Button,
@@ -16,7 +20,7 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={{ margin: '3em' }}>
+      <div style={styles}>
         <Story />
       </div>
     ),
