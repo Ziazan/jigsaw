@@ -18,18 +18,21 @@ export default {
       ],
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={styles}>
-        <Story />
-      </div>
-    ),
-  ],
 } as Meta;
 
 export const Primary: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
-
 Primary.storyName = '按钮';
+Primary.parameters = {
+  info: {
+    text: `
+      # 这是一个按钮组件
+      addon-info 支持markdown语法
+      ~~~js
+      const onClick = ()=>{}
+      ~~~`,
+    inline: true, //是否在展示页面内显示
+  },
+};
 
 export const ButtonWithType: Story<ButtonProps> = (args) => (
   <>
