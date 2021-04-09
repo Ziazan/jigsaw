@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Meta, Story } from '@storybook/react';
 import Button, { ButtonProps } from './index';
 
-const styles: React.CSSProperties = {
+const styles: CSSProperties = {
   textAlign: 'center',
   margin: '3em',
 };

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { layer } from '@fortawesome/fontawesome-svg-core';
 
@@ -11,12 +11,12 @@ interface BaseButtonProps {
   disabled?: boolean;
   size?: ButtonSize;
   btnType?: ButtonType;
-  children: React.ReactNode;
+  children: ReactNode;
   href?: string;
 }
 //& 混合两种的属性
-type NativeButtonProps = BaseButtonProps & React.ButtonHTMLAttributes<HTMLElement>;
-type AnchorButtonProps = BaseButtonProps & React.AnchorHTMLAttributes<HTMLElement>;
+type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
+type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 
 //Partial 设置属性可选
 export type ButtonProps = Partial<AnchorButtonProps & NativeButtonProps>;
