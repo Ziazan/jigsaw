@@ -1,75 +1,85 @@
-import React, { FC, useState, createContext } from 'react'
-import classNames from 'classnames'
-import { MenuItemProps } from './menuItem'
+import React, { FC, useState, createContext } from 'react';
+import classNames from 'classnames';
+import { MenuItemProps } from './menuItem';
 
-type SelectCallBack = (selectedIndex: string) => void
+type SelectCallBack = (selectedIndex: string) => void;
 
 //字符串字面量
-type MenuMode = 'horizontal' | 'vertical'
+type MenuMode = 'horizontal' | 'vertical';
 
 export interface MenuProps {
-	defaultIndex?: string
-	className?: string
-	mode?: MenuMode
-	style?: React.CSSProperties
-	onSelect?: SelectCallBack
-	defaultOpenSubMenus?: string[]
+  /** 默认激活 */
+  defaultIndex?: string;
+  className?: string;
+  /** 展示模式 */
+  mode?: MenuMode;
+  style?: React.CSSProperties;
+  /** 菜单选中回调 */
+  onSelect?: SelectCallBack;
+  /** 默认展开菜单 */
+  defaultOpenSubMenus?: string[];
 }
 interface IMenuContext {
-	index: string
-	onSelect?: SelectCallBack
-	mode?: MenuMode
-	defaultOpenSubMenus?: string[]
+  index: string;
+  onSelect?: SelectCallBack;
+  mode?: MenuMode;
+  defaultOpenSubMenus?: string[];
 }
 
-export const MenuContext = createContext<IMenuContext>({ index: '0' })
+export const MenuContext = createContext<IMenuContext>({ index: '0' });
 
-const Menu: FC<MenuProps> = (props) => {
-	const { defaultIndex, className, style, mode, onSelect, children, defaultOpenSubMenus } = props
-	const [currentActive, setActive] = useState(defaultIndex)
-	const classes = classNames('jigsaw-menu', className, {
-		'menu-vertical': mode === 'vertical',
-		'menu-horizontal': mode !== 'vertical',
-	})
-	const handleClick = (index: string) => {
-		setActive(index)
+/**
+ * 菜单项
+ * @param props
+ * @returns
+ */
+export const Menu: FC<MenuProps> = (props) => {
+  const { defaultIndex, className, style, mode, onSelect, children, defaultOpenSubMenus } = props;
+  const [currentActive, setActive] = useState(defaultIndex);
+  const classes = classNames('jigsaw-menu', className, {
+    'menu-vertical': mode === 'vertical',
+    'menu-horizontal': mode !== 'vertical',
+  });
+  const handleClick = (index: string) => {
+    setActive(index);
 
-		if (onSelect) {
-			onSelect(index)
-		}
-	}
-	const passedContext: IMenuContext = {
-		index: currentActive ? currentActive : '0',
-		onSelect: handleClick,
-		mode,
-		defaultOpenSubMenus,
-	}
+    if (onSelect) {
+      onSelect(index);
+    }
+  };
+  const passedContext: IMenuContext = {
+    index: currentActive ? currentActive : '0',
+    onSelect: handleClick,
+    mode,
+    defaultOpenSubMenus,
+  };
 
-	//props 中的 children 是一个不透明的数据 直接map不可靠，使用React.Children
-	const renderChildren = () => {
-		return React.Children.map(children, (child, index) => {
-			const childElement = child as React.FunctionComponentElement<MenuItemProps>
-			const { displayName } = childElement.type
-			if (displayName === 'MenuItem' || displayName === 'SubMenu') {
-				return React.cloneElement(childElement, {
-					index: '' + index,
-				})
-			} else {
-				console.error('Warning：Menu has a child which is not MenuItm or SubMenu')
-			}
-		})
-	}
+  //props 中的 children 是一个不透明的数据 直接map不可靠，使用React.Children
+  const renderChildren = () => {
+    return React.Children.map(children, (child, index) => {
+      const childElement = child as React.FunctionComponentElement<MenuItemProps>;
+      const { displayName } = childElement.type;
+      if (displayName === 'MenuItem' || displayName === 'SubMenu') {
+        return React.cloneElement(childElement, {
+          index: '' + index,
+        });
+      } else {
+        console.error('Warning：Menu has a child which is not MenuItm or SubMenu');
+      }
+    });
+  };
 
-	return (
-		<ul className={classes} style={style} data-testid="test-menu">
-			<MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
-		</ul>
-	)
-}
+  return (
+    <ul className={classes} style={style} data-testid="test-menu">
+      <MenuContext.Provider value={passedContext}>{renderChildren()}</MenuContext.Provider>
+    </ul>
+  );
+};
 
 Menu.defaultProps = {
-	defaultIndex: '0',
-	mode: 'horizontal',
-	defaultOpenSubMenus: [],
-}
-export default Menu
+  defaultIndex: '0',
+  mode: 'horizontal',
+  defaultOpenSubMenus: [],
+};
+
+export default Menu;

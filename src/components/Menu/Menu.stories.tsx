@@ -32,7 +32,6 @@ const Template: Story<MenuProps> = (args) => (
   </TransMenu>
 );
 export const Menu = Template.bind({});
-Menu.storyName = '菜单';
 
 export const VerticalMenu: Story<MenuProps> = (args) => (
   <TransMenu mode="vertical">
@@ -44,4 +43,3 @@ export const VerticalMenu: Story<MenuProps> = (args) => (
     </TransMenu.SubMenu>
   </TransMenu>
 );
-VerticalMenu.storyName = '垂直菜单';
