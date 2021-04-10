@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactElement, FC } from 'react';
+import React, { InputHTMLAttributes, ReactElement, FC, ChangeEvent } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import classNames from 'classnames';
 import Icon from './../Icon';
@@ -15,6 +15,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size
   prepend?: string | IconProp | ReactElement;
   /** 表单后缀 */
   append?: string | IconProp | ReactElement;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 /**
  * 表单输入框
@@ -33,6 +34,19 @@ export const Input: FC<InputProps> = (props) => {
     'has-prepend': !!prepend,
     'has-append': !!append || !!icon,
   });
+
+  //防止react 报错:把非受控组件变成受控组件
+  const fixControlledValue = (value: any) => {
+    if (typeof value === 'undefined' || value === null) {
+      return '';
+    }
+    return value;
+  };
+  //如果设置了value 属性，就删除defaultValue
+  if ('value' in props) {
+    delete restProps.defaultValue;
+    restProps.value = fixControlledValue(props.value);
+  }
 
   return (
     //根据属性判断是否要添加特定的节点
