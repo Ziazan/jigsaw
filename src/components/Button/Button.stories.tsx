@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { Meta, Story } from '@storybook/react';
-import Button, { ButtonProps } from './index';
+import Button from './index';
+import { ButtonProps } from './button';
 
 const styles: CSSProperties = {
   textAlign: 'center',

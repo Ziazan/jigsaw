@@ -3,12 +3,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fas);
 
-import Button, { ButtonType, ButtonSize } from './components/Button';
+import Button from './components/Button';
 import Menu from './components/Menu';
 import MenuItem from './components/Menu/menuItem';
 import SubMenu from './components/Menu/SubMenu';
 import Icon from './components/Icon';
 import Transition from './components/Transition';
+import { Input } from './components/Input/input';
 
 import './App.css';
 
@@ -17,6 +18,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>表单</h1>
+        <Input placeholder="默认表单" />
+        <Input size="lg" placeholder="超大表单" />
+        <Input size="sm" placeholder="小表单" />
+        <Input disabled={true} placeholder="禁用表单" />
         <h1>图标</h1>
         <Icon icon="coffee" theme="danger" size="5x" />
         <Icon icon="arrow-down" theme="danger" size="5x" />
