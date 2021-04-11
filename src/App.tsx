@@ -17,7 +17,7 @@ import './App.css';
 function App() {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState('');
-  const fetchSugestions = (keyword: string) => {
+  const fetchSuggestions = (keyword: string) => {
     return [1, 2, 3, 4, 5].map((item) => {
       return `${keyword}-${item}`;
     });
@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>输入建议</h1>
-        <AutoComplete fetchSugestions={fetchSugestions} onSelect={onSelect} />
+        <AutoComplete fetchSuggestions={fetchSuggestions} onSelect={onSelect} />
         <h1>表单</h1>
         <p>值：{value}</p>
         <Input

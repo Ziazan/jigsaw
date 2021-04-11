@@ -1,10 +1,10 @@
 import React, { FC, InputHTMLAttributes, ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
-import Input from './../Input';
+import Input, { InputProps } from '../Input/input';
 import Icon from './../Icon';
 
-export interface AutoCompleteProps extends Omit<InputHTMLAttributes<HTMLElement>, 'onSelect'> {
-  fetchSugestions: (keyword: string) => string[];
+export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
+  fetchSuggestions: (keyword: string) => string[];
   onSelect?: (item: string) => void;
 }
 //可以优化的点
@@ -14,14 +14,25 @@ export interface AutoCompleteProps extends Omit<InputHTMLAttributes<HTMLElement>
 //点击外部收起菜单
 
 export const AutoComplete: FC<AutoCompleteProps> = (props) => {
-  const { fetchSugestions, onSelect, className, ...restProps } = props;
+  const { fetchSuggestions, onSelect, value, className, ...restProps } = props;
   const classes = classNames('jigsaw-auto-complete', className, {});
-  const initSuggestions: string[] = [];
-  const [sugesstions, setSuggestions] = useState(initSuggestions);
+  const [inputValue, setInputValue] = useState(value);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   const [active, setActive] = useState(-1);
 
+  /**
+   * 输入值改变
+   * @param e
+   */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSuggestions(fetchSugestions(e.target.value));
+    const value = e.target.value.trim();
+    setInputValue(value);
+    if (value) {
+      const results = fetchSuggestions(value);
+      setSuggestions(results);
+    } else {
+      setSuggestions([]);
+    }
   };
 
   const handleItemClick = (item: { data?: string; index: number }) => {
@@ -40,10 +51,10 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   return (
     <div className={classes}>
-      <Input placeholder="请输入关键词" onChange={handleChange} />
-      {sugesstions.length > 0 && (
+      <Input placeholder="请输入关键词" value={inputValue} onChange={handleChange} {...restProps} />
+      {suggestions.length > 0 && (
         <ul className="jigsaw-auto-complete-list">
-          {sugesstions.map((_str, index) => {
+          {suggestions.map((_str, index) => {
             return (
               <li
                 className={liClasses(index)}
