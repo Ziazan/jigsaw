@@ -1,6 +1,7 @@
 import React, { FC, ChangeEvent, useState, ReactElement } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from '../Input/input';
+import Icon from './../Icon';
 
 interface DataSourceObject {
   value: string;
@@ -29,6 +30,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const [inputValue, setInputValue] = useState(value);
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   /**
    * 输入值改变
@@ -40,8 +42,10 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     if (value) {
       const results = fetchSuggestions(value);
       if (results instanceof Promise) {
+        setLoading(true);
         results.then((data) => {
           setSuggestions(data);
+          setLoading(false);
         });
       } else {
         setSuggestions(results);
@@ -86,6 +90,11 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   return (
     <div className={classes}>
       <Input placeholder="请输入关键词" value={inputValue} onChange={handleChange} {...restProps} />
+      {loading && (
+        <div>
+          <Icon icon="spinner" spin />
+        </div>
+      )}
       {suggestions.length > 0 && generateDropDown()}
     </div>
   );

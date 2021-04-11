@@ -61,8 +61,8 @@ const renderOption = (item: DataSourceType) => {
 const renderGitHubUserOption = (item: DataSourceType) => {
   return (
     <>
-      <Icon icon="book" />
-      {item.login}
+      <Icon icon="user" />
+      {item.login}:{item.url}
     </>
   );
 };
@@ -84,5 +84,7 @@ export const CustomAutoCompleteItem: Story<AutoCompleteProps> = (args) => {
 };
 
 export const AsyncData: Story<AutoCompleteProps> = (args) => {
-  return <AutoComplete {...AsyncAutoCompleteProps} renderOption={renderGitHubUserOption} />;
+  return (
+    <AutoComplete placeholder="输入github账号" {...AsyncAutoCompleteProps} renderOption={renderGitHubUserOption} />
+  );
 };
