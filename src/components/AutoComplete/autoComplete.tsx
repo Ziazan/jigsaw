@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, useState, ReactElement, useEffect } from 'react';
+import React, { FC, ChangeEvent, useState, ReactElement, useEffect, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from '../Input/input';
 import Icon from './../Icon';
@@ -32,6 +32,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [inputValue, setInputValue] = useState(value as string);
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
   const [loading, setLoading] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(-1);
   const debounceValue = useDebounce(inputValue, 500);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     setInputValue(value);
   };
 
-  const handleItemClick = (item: { data?: DataSourceType; index: number }) => {
+  const handleSelect = (item: { data?: DataSourceType; index: number }) => {
     setInputValue(item.data?.value as string);
     setSuggestions([]);
     if (onSelect) {
@@ -68,20 +69,52 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
       _onSelect(item.data?.value as string);
     }
   };
+
+  const highlight = (index: number) => {
+    if (index < 0) {
+      index = 0;
+    } else if (index >= suggestions.length) {
+      index = suggestions.length - 1;
+    }
+    setHighlightIndex(index);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    switch (e.keyCode) {
+      case 13: //enter
+        if (suggestions[highlightIndex]) {
+          handleSelect({ data: suggestions[highlightIndex], index: highlightIndex });
+        }
+        break;
+      case 38: //up
+        highlight(highlightIndex - 1);
+        break;
+      case 40: //down
+        highlight(highlightIndex + 1);
+        break;
+      case 27: //esc
+        setSuggestions([]);
+        break;
+    }
+  };
   /** 渲染自定义的模板 */
   const renderTemplate = (item: DataSourceType) => {
     return renderOption ? renderOption(item) : item.value;
   };
   const generateDropDown = () => {
+    const cname = (index: number) =>
+      classNames('auto-complete-item', {
+        'is-highlighted': index === highlightIndex,
+      });
     return (
       <ul className="jigsaw-auto-complete-list">
         {suggestions.map((item, index) => {
           return (
             <li
-              className="auto-complete-item"
+              className={cname(index)}
               key={index}
               onClick={(e) => {
-                handleItemClick({ data: item, index });
+                handleSelect({ data: item, index });
               }}
             >
               {renderTemplate(item)}
@@ -94,7 +127,13 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   return (
     <div className={classes}>
-      <Input placeholder="请输入关键词" value={inputValue} onChange={handleChange} {...restProps} />
+      <Input
+        placeholder="请输入关键词"
+        value={inputValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        {...restProps}
+      />
       {loading && (
         <div>
           <Icon icon="spinner" spin />
