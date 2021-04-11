@@ -15,11 +15,19 @@ import './App.css';
 
 function App() {
   const [show, setShow] = useState(false);
+  const [value, setValue] = useState('');
   return (
     <div className="App">
       <header className="App-header">
         <h1>表单</h1>
-        <Input placeholder="默认表单" />
+        <p>值：{value}</p>
+        <Input
+          placeholder="默认表单"
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        />
         <Input size="lg" placeholder="超大表单" />
         <Input size="sm" placeholder="小表单" />
         <Input disabled={true} placeholder="禁用表单" />

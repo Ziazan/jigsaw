@@ -12,9 +12,9 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size
   /** 有图标的表单 */
   icon?: IconProp;
   /** 表单前缀 */
-  prepend?: string | IconProp | ReactElement;
+  prepend?: string | ReactElement;
   /** 表单后缀 */
-  append?: string | IconProp | ReactElement;
+  append?: string | ReactElement;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 /**
@@ -52,7 +52,7 @@ export const Input: FC<InputProps> = (props) => {
     //根据属性判断是否要添加特定的节点
     <div className={classes}>
       {prepend && <div className="input-prepend">{prepend}</div>}
-      <input disabled={disabled} {...restProps} />
+      <input className="jigsaw-input-inner" disabled={disabled} {...restProps} />
       {(icon || append) && <div className="input-append">{icon ? <Icon icon={icon} /> : append}</div>}
     </div>
   );
