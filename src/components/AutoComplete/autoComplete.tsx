@@ -1,12 +1,20 @@
 import React, { FC, ChangeEvent, useState, ReactElement } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from '../Input/input';
-import Icon from './../Icon';
+
+interface DataSourceObject {
+  value: string;
+}
+
+export type DataSourceType<T = Record<string, any>> = T & DataSourceObject;
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-  fetchSuggestions: (keyword: string) => string[];
+  /** 建议回调 */
+  fetchSuggestions: (keyword: string) => DataSourceType[];
+  /** 选中回调 */
   onSelect?: (item: string) => void;
-  renderOption?: (item: string) => ReactElement;
+  /** 自定义渲染item */
+  renderOption?: (item: DataSourceType) => ReactElement;
 }
 //可以优化的点
 //可以自定义option的样式
@@ -20,7 +28,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const classes = classNames('jigsaw-auto-complete', className, {});
 
   const [inputValue, setInputValue] = useState(value);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
 
   /**
    * 输入值改变
@@ -37,17 +45,17 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     }
   };
 
-  const handleItemClick = (item: { data?: string; index: number }) => {
-    setInputValue(item.data);
+  const handleItemClick = (item: { data?: DataSourceType; index: number }) => {
+    setInputValue(item.data?.value);
     setSuggestions([]);
     if (onSelect) {
       const _onSelect = onSelect as (item: string) => void;
-      _onSelect(item.data as string);
+      _onSelect(item.data?.value as string);
     }
   };
   /** 渲染自定义的模板 */
-  const renderTemplate = (item: string) => {
-    return renderOption ? renderOption(item) : item;
+  const renderTemplate = (item: DataSourceType) => {
+    return renderOption ? renderOption(item) : item.value;
   };
   const generateDropDown = () => {
     return (

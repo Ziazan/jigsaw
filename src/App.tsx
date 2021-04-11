@@ -17,11 +17,23 @@ import './App.css';
 function App() {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState('');
+  const lakersWithNumber = [
+    { value: 'bradley', number: 11 },
+    { value: 'pope', number: 1 },
+    { value: 'caruso', number: 4 },
+    { value: 'cook', number: 2 },
+    { value: 'cousins', number: 15 },
+    { value: 'james', number: 23 },
+    { value: 'AD', number: 3 },
+    { value: 'green', number: 14 },
+    { value: 'howard', number: 39 },
+    { value: 'kuzma', number: 0 },
+  ];
+
   const fetchSuggestions = (keyword: string) => {
-    return [1, 2, 3, 4, 5].map((item) => {
-      return `${keyword}-${item}`;
-    });
+    return lakersWithNumber.filter((item) => item.value.includes(keyword));
   };
+
   const onSelect = (item: string) => {
     console.log('item', item);
   };

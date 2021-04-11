@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Story, Meta } from '@storybook/react';
-import AutoComplete, { AutoCompleteProps } from './autoComplete';
+import AutoComplete, { AutoCompleteProps, DataSourceType } from './autoComplete';
 import Icon from './../Icon';
 
 export default {
@@ -13,20 +13,31 @@ export default {
   },
 } as Meta;
 
+const lakersWithNumber = [
+  { value: 'bradley', number: 11 },
+  { value: 'pope', number: 1 },
+  { value: 'caruso', number: 4 },
+  { value: 'cook', number: 2 },
+  { value: 'cousins', number: 15 },
+  { value: 'james', number: 23 },
+  { value: 'AD', number: 3 },
+  { value: 'green', number: 14 },
+  { value: 'howard', number: 39 },
+  { value: 'kuzma', number: 0 },
+];
+
 const fetchSuggestions = (keyword: string) => {
-  return [1, 2, 3, 4, 5].map((item) => {
-    return `${keyword}-${item}`;
-  });
+  return lakersWithNumber.filter((item) => item.value.includes(keyword));
 };
 const onSelect = (item: string) => {
   console.log('item', item);
 };
 
-const renderOption = (query: string) => {
+const renderOption = (item: DataSourceType) => {
   return (
     <>
       <Icon icon="book" />
-      {query}
+      {item.value}
     </>
   );
 };
