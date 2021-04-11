@@ -13,6 +13,15 @@ export default {
   },
 } as Meta;
 
+interface LakerProps {
+  number: number;
+}
+
+interface GithubUserProps {
+  login: string;
+  url: string;
+  avatar_url: string;
+}
 const lakersWithNumber = [
   { value: 'bradley', number: 11 },
   { value: 'pope', number: 1 },
@@ -29,6 +38,14 @@ const lakersWithNumber = [
 const fetchSuggestions = (keyword: string) => {
   return lakersWithNumber.filter((item) => item.value.includes(keyword));
 };
+
+const handleFetch = (query: string) => {
+  return fetch(`https://api.github.com/search/users?q=${query}`)
+    .then((res) => res.json())
+    .then(({ items }) => {
+      return items.slice(0, 10).map((item: any) => ({ value: item.login, ...item }));
+    });
+};
 const onSelect = (item: string) => {
   console.log('item', item);
 };
@@ -41,14 +58,31 @@ const renderOption = (item: DataSourceType) => {
     </>
   );
 };
-const DefaultAutonCompleteProps: AutoCompleteProps = {
+const renderGitHubUserOption = (item: DataSourceType) => {
+  return (
+    <>
+      <Icon icon="book" />
+      {item.login}
+    </>
+  );
+};
+const DefaultAutoCompleteProps: AutoCompleteProps = {
   fetchSuggestions: fetchSuggestions,
   onSelect: onSelect,
 };
+
+const AsyncAutoCompleteProps: AutoCompleteProps = {
+  fetchSuggestions: handleFetch,
+  onSelect: onSelect,
+};
 export const Default: Story<AutoCompleteProps> = (args) => {
-  return <AutoComplete {...DefaultAutonCompleteProps} />;
+  return <AutoComplete {...DefaultAutoCompleteProps} />;
 };
 
 export const CustomAutoCompleteItem: Story<AutoCompleteProps> = (args) => {
-  return <AutoComplete {...DefaultAutonCompleteProps} renderOption={renderOption} />;
+  return <AutoComplete {...DefaultAutoCompleteProps} renderOption={renderOption} />;
+};
+
+export const AsyncData: Story<AutoCompleteProps> = (args) => {
+  return <AutoComplete {...AsyncAutoCompleteProps} renderOption={renderGitHubUserOption} />;
 };

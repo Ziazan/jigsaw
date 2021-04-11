@@ -9,8 +9,8 @@ interface DataSourceObject {
 export type DataSourceType<T = Record<string, any>> = T & DataSourceObject;
 
 export interface AutoCompleteProps extends Omit<InputProps, 'onSelect'> {
-  /** 建议回调 */
-  fetchSuggestions: (keyword: string) => DataSourceType[];
+  /** 建议回调 支持返回promise */
+  fetchSuggestions: (keyword: string) => DataSourceType[] | Promise<DataSourceType[]>;
   /** 选中回调 */
   onSelect?: (item: string) => void;
   /** 自定义渲染item */
@@ -39,7 +39,13 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     setInputValue(value);
     if (value) {
       const results = fetchSuggestions(value);
-      setSuggestions(results);
+      if (results instanceof Promise) {
+        results.then((data) => {
+          setSuggestions(data);
+        });
+      } else {
+        setSuggestions(results);
+      }
     } else {
       setSuggestions([]);
     }
