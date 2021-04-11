@@ -59,6 +59,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setInputValue(value);
+    setHighlightIndex(-1);
   };
 
   const handleSelect = (item: { data?: DataSourceType; index: number }) => {
