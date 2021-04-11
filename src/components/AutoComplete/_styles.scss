@@ -1,0 +1,26 @@
+.jigsaw-auto-complete {
+  display: inline-block;
+  .jigsaw-auto-complete-list {
+    padding-left: 0;
+    list-style: none;
+    border: $border-width solid $border-color;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+  .auto-complete-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    &:hover,
+    &.is-active {
+      color: $menu-item-active-color;
+    }
+    &:not(:last-child) {
+      border-bottom: $border-width solid $border-color;
+    }
+    .item-icon {
+      //   flex: 1;
+    }
+  }
+}

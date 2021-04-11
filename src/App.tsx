@@ -22,11 +22,14 @@ function App() {
       return `${keyword}-${item}`;
     });
   };
+  const onSelect = (item: string) => {
+    console.log('item', item);
+  };
   return (
     <div className="App">
       <header className="App-header">
         <h1>输入建议</h1>
-        <AutoComplete fetchSugestions={fetchSugestions} />
+        <AutoComplete fetchSugestions={fetchSugestions} onSelect={onSelect} />
         <h1>表单</h1>
         <p>值：{value}</p>
         <Input
