@@ -1,7 +1,8 @@
-import React, { FC, ChangeEvent, useState, ReactElement } from 'react';
+import React, { FC, ChangeEvent, useState, ReactElement, useEffect } from 'react';
 import classNames from 'classnames';
 import Input, { InputProps } from '../Input/input';
 import Icon from './../Icon';
+import useDebounce from './../hooks/useDebounce';
 
 interface DataSourceObject {
   value: string;
@@ -28,19 +29,14 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
 
   const classes = classNames('jigsaw-auto-complete', className, {});
 
-  const [inputValue, setInputValue] = useState(value);
+  const [inputValue, setInputValue] = useState(value as string);
   const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
   const [loading, setLoading] = useState(false);
+  const debounceValue = useDebounce(inputValue, 500);
 
-  /**
-   * 输入值改变
-   * @param e
-   */
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-    setInputValue(value);
-    if (value) {
-      const results = fetchSuggestions(value);
+  useEffect(() => {
+    if (debounceValue) {
+      const results = fetchSuggestions(debounceValue);
       if (results instanceof Promise) {
         setLoading(true);
         results.then((data) => {
@@ -53,10 +49,19 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     } else {
       setSuggestions([]);
     }
+  }, [debounceValue]);
+
+  /**
+   * 输入值改变
+   * @param e
+   */
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setInputValue(value);
   };
 
   const handleItemClick = (item: { data?: DataSourceType; index: number }) => {
-    setInputValue(item.data?.value);
+    setInputValue(item.data?.value as string);
     setSuggestions([]);
     if (onSelect) {
       const _onSelect = onSelect as (item: string) => void;
