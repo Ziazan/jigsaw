@@ -10,15 +10,23 @@ import SubMenu from './components/Menu/SubMenu';
 import Icon from './components/Icon';
 import Transition from './components/Transition';
 import { Input } from './components/Input/input';
+import AutoComplete from './components/AutoComplete/autoComplete';
 
 import './App.css';
 
 function App() {
   const [show, setShow] = useState(false);
   const [value, setValue] = useState('');
+  const fetchSugestions = (keyword: string) => {
+    return [1, 2, 3, 4, 5].map((item) => {
+      return `${keyword}-${item}`;
+    });
+  };
   return (
     <div className="App">
       <header className="App-header">
+        <h1>输入建议</h1>
+        <AutoComplete fetchSugestions={fetchSugestions} />
         <h1>表单</h1>
         <p>值：{value}</p>
         <Input

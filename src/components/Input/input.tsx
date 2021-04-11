@@ -24,10 +24,10 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement>, 'size
  */
 export const Input: FC<InputProps> = (props) => {
   //取出各种属性
-  const { disabled, size, icon, prepend, append, ...restProps } = props;
+  const { disabled, size, icon, className, prepend, append, ...restProps } = props;
 
   //根据属性计算不同的className
-  const classes = classNames('jigsaw-input', {
+  const classes = classNames('jigsaw-input', className, {
     'input-sm': size === 'sm',
     'input-lg': size === 'lg',
     'is-disabled': disabled,
