@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Input, { InputProps } from '../Input/input';
 import Icon from './../Icon';
 import useDebounce from './../hooks/useDebounce';
+import useClickOutside from './../hooks/useClickOutside';
 
 interface DataSourceObject {
   value: string;
@@ -35,6 +36,10 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   const [highlightIndex, setHighlightIndex] = useState(-1);
   const debounceValue = useDebounce(inputValue, 500);
   const triggerSearch = useRef(false);
+  const componentRef = useRef<HTMLDivElement>(null);
+  useClickOutside(componentRef, () => {
+    setSuggestions([]);
+  });
 
   useEffect(() => {
     if (debounceValue && triggerSearch.current) {
@@ -130,7 +135,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
   };
 
   return (
-    <div className={classes}>
+    <div className={classes} ref={componentRef}>
       <Input
         placeholder="请输入关键词"
         value={inputValue}
