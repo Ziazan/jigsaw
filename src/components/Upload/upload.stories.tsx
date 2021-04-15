@@ -1,11 +1,11 @@
 import React, { ChangeEvent } from 'react';
 import { Meta, Story } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import Upload, { UploadProps } from './upload';
 
 export default {
   title: 'Components/Upload',
   component: Upload,
-  parameters: { actions: { argTypesRegex: '^on.*' } },
 } as Meta;
 
 export const Default: Story<UploadProps> = (args) => {
@@ -13,6 +13,15 @@ export const Default: Story<UploadProps> = (args) => {
 };
 Default.args = {
   action: 'https://jsonplaceholder.typicode.com/users/1/posts',
+  onProgress: () => {
+    action('progress');
+  },
+  onSuccess: () => {
+    action('onSuccess');
+  },
+  onError: () => {
+    action('onError');
+  },
 };
 Default.parameters = {
   info: {

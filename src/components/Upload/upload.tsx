@@ -1,7 +1,19 @@
-import React, { ChangeEvent, FC, useRef } from 'react';
+import React, { ChangeEvent, FC, useRef, RefObject } from 'react';
 import axios from 'axios';
 import Button from './../Button';
 import Icon from './../Icon';
+
+/* <Upload
+  action="https://upload!"
+  beforeUplaod={() => {}}
+  onProgress={() => {}}
+  onChange={() => {}}
+  onSuccess={() => {}}
+  onError={() => {}}
+  onRemoved={() => {}}
+>
+  <Button>click to upload</Button>
+</Upload>; */
 
 export interface UploadProps {
   /** 上传地址  */
@@ -15,23 +27,31 @@ export interface UploadProps {
   /** 文件上传进度 */
   onProgress?: (precentage: number, file: File) => void;
   /** 上传成功 */
-  onSuccess?: (file: File) => void;
+  onSuccess?: (info: any, file: File) => void;
   /** 上传失败 */
   onError?: (error: Error, file: File) => void;
 }
 
 const Upload: FC<UploadProps> = (props) => {
-  const { action, onChange, onProgress, onError } = props;
+  const { action, onChange, onProgress, onSuccess, onError } = props;
   const fileInput = useRef(null);
+
+  const handleClick = () => {
+    if (fileInput) {
+      const _fileInput = (fileInput.current as unknown) as HTMLInputElement;
+      _fileInput.click();
+    }
+  };
+
   const handleFileChang = (e: ChangeEvent<HTMLInputElement>) => {
     console.log('%c  handleFileChang:', 'color: #0e93e0;background: #aaefe5;', handleFileChang);
     if (!e.target.files) {
       return;
     }
-    onUpload(e.target.files);
+    upLoadFiles(e.target.files);
   };
 
-  const onUpload = (fileList: FileList) => {
+  const upLoadFiles = (fileList: FileList) => {
     const _files = Array.from(fileList);
     _files.forEach((file) => {
       const formData = new FormData();
@@ -47,23 +67,28 @@ const Upload: FC<UploadProps> = (props) => {
           },
         })
         .then(({ data }) => {
-          console.log('%c  data:', 'color: #0e93e0;background: #aaefe5;', data);
-          onChange && onChange(data, file);
+          onSuccess && onSuccess(data.file);
         })
         .catch((error) => {
-          onChange && onChange(null, file);
           onError && onError(error, file);
         });
     });
   };
 
   return (
-    <div>
-      <Button btnType="primary">
+    <div className="jigsaw-upload-wrap">
+      <Button btnType="primary" onClick={handleClick}>
         <Icon icon="upload" />
-        click me to upload
+        上传文件
       </Button>
-      <input type="file" ref={fileInput} name="filename" onChange={handleFileChang} />
+      <input
+        className="jigsaw-input"
+        style={{ display: 'none' }}
+        type="file"
+        ref={fileInput}
+        name="filename"
+        onChange={handleFileChang}
+      />
     </div>
   );
 };
