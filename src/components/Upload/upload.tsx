@@ -166,6 +166,7 @@ const Upload: FC<UploadProps> = (props) => {
         name="filename"
         onChange={handleFileChang}
       />
+
       <UploadList fileList={fileList} onRemove={handleOnRemove} />
     </div>
   );
